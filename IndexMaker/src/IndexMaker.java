@@ -47,7 +47,7 @@ public class IndexMaker
 
     // Create index:
 
-    DocumentIndex index = new DocumentIndex();
+    DocumentIndex index = new DocumentIndex(4);
 
     String line;
     int lineNum = 0;
