@@ -19,10 +19,10 @@ public class IndexEntry {
 	}
 	
 	public String toString() {	//Verify format
-		String temp = "";
+		String result = word;
 		for(int i = 0; i < numsList.size(); i ++) {
-			temp = temp + "\n" + numsList.get(i);
+			result += "\t, " + numsList.get(i) ;	//Adds the line where the number appears "foo	4, 5"
 		}
-		return temp;
+		return result;
 	}
 }
