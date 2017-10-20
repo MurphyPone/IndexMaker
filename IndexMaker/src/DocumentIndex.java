@@ -12,24 +12,25 @@ public class DocumentIndex extends ArrayList<IndexEntry> { //Represents the enti
 		list = new ArrayList<IndexEntry>(size);
 	}
 	
-	public void addWord(String word, int num) { //Why does this need to accept a num if foundOrInserted returns a num...
-		list.get(num).add(foundOrInserted(word));	//This is not correct!
+	public void addWord(String word, int lnNum) { 
+		if(foundOrInserted(word) >-1) //TODO fix with var
+			list.get(foundOrInserted(word)).add(lnNum);
 	}
 	
-	public void addAllWords(String str, int num) { 
+	public void addAllWords(String str, int lnNum) { 
 		String[] words = str.split("\\W+"); //should split str into individual word elements w/o punctuation
 		
 		if(words.length > 0) {	//HAs elements, and is therefore valid
 			for(String word : words) {
 				if(!word.equals("") ); 	//Not empty
-					addWord(word, num);
+					addWord(word, lnNum);
 			}
 		} else {System.out.println("Invalid String");}	//makes it here, but doesn't print...
 	}
 	
 	
 	//Not sure what this is for
-	private int foundOrInserted(String word) {
+	private int foundOrInserted(String word) {	//Returns the index of the place it belongs
 		if(word != "") {		//Is a valid string
 			for(int i = 0; i < list.size(); i++) {	//"traverses this DocumentIndex"
 				IndexEntry entry = list.get(i);	//Temp var for entry[i]
@@ -43,11 +44,12 @@ public class DocumentIndex extends ArrayList<IndexEntry> { //Represents the enti
 							return j; 	//Break out of method to avoid the base case of adding the word to the end
 						} 
 					} //After looping through all entries with no matches
+					System.out.println("got here");
 					list.add(new IndexEntry(word)); //Add entry to the end of the list 
 				}
 			}
 		} else {System.out.println("Invalid String");}
-		return 5;
+		return -1;
 	}
 
 }
