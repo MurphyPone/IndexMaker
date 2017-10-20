@@ -29,7 +29,7 @@ public class IndexMaker {
 
     // Create output file:
     if (args.length > 1)
-    		fileName = args[1];		//REUUSES fileNAME WHICH IS CLEVER
+    		fileName = args[1];		//REUSES fileNAME WHICH IS CLEVER
     else {
     		System.out.print("\nEnter output file name: ");
       	fileName = keyboard.nextLine().trim();

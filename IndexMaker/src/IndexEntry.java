@@ -10,8 +10,7 @@ public class IndexEntry {
 	}
 	
 	public void add(int num) {	//Appends num to numslist if it is not already in the list
-		if(numsList.get(num) == -1) 
-			numsList.add(num);
+		numsList.add(num);
 	}
 	
 	public String getWord() {
