@@ -12,24 +12,8 @@ public class DocumentIndex extends ArrayList<IndexEntry> { //Represents the enti
 		list = new ArrayList<IndexEntry>(size);
 	}
 	
-	public void addWord(String word, int num) { 
-		if(word != "") {		//Is a valid string
-			for(int i = 0; i < list.size(); i++) {
-				IndexEntry entry = list.get(i);	//Temp var for the given entry[i]
-				
-				if(entry.getWord().equals(word)) {	//An entry exists for the given word
-					entry.add(num);	//Adds num to that entry
-				} else {	 //Entry does not already exist
-					for(int j = 0; j < list.size(); j++) {	//Unnecessary loop?
-						if(word.toLowerCase().compareTo(entry.getWord().toLowerCase()) < 0) {	//word precedes entry alphabetically
-							list.add(j, new IndexEntry(word)); 		//Inserts word at Entry's pos, pushing entry and all following elements down 
-							break;	//Break out of method to avoid the base case of adding the word to the end
-						} 
-					} //After looping through all entries with no matches
-					list.add(new IndexEntry(word)); //Add entry to the end of the list 
-				}
-			}
-		} else {System.out.println("Invalid String");}
+	public void addWord(String word, int num) { //Why does this need to accept a num if foundOrInserted returns a num...
+		list.get(num).add(foundOrInserted(word));	//This is not correct!
 	}
 	
 	public void addAllWords(String str, int num) { 
@@ -45,7 +29,24 @@ public class DocumentIndex extends ArrayList<IndexEntry> { //Represents the enti
 	
 	
 	//Not sure what this is for
-	private int foundOrInsert(String word) {
+	private int foundOrInserted(String word) {
+		if(word != "") {		//Is a valid string
+			for(int i = 0; i < list.size(); i++) {	//"traverses this DocumentIndex"
+				IndexEntry entry = list.get(i);	//Temp var for entry[i]
+				
+				if(entry.getWord().toLowerCase().equals(word.toLowerCase() )) {	//An entry exists for the given word
+					return i;	//Returns index of the word that matches
+				} else {	 //Entry does not already exist
+					for(int j = 0; j < list.size(); j++) {	//Unnecessary loop?
+						if(word.toLowerCase().compareTo(entry.getWord().toLowerCase()) < 0) {	//word precedes entry alphabetically
+							list.add(j, new IndexEntry(word)); 		//Inserts word at Entry's pos, pushing entry and all following elements down 
+							return j; 	//Break out of method to avoid the base case of adding the word to the end
+						} 
+					} //After looping through all entries with no matches
+					list.add(new IndexEntry(word)); //Add entry to the end of the list 
+				}
+			}
+		} else {System.out.println("Invalid String");}
 		return 5;
 	}
 
