@@ -39,7 +39,9 @@ public class DocumentIndex extends ArrayList<IndexEntry> { //Represents the enti
 					return i;	//Returns index of the word that matches
 				} else {	 //Entry does not already exist
 					for(int j = 0; j < list.size(); j++) {	//Unnecessary loop?
-						if(word.toLowerCase().compareTo(entry.getWord().toLowerCase()) < 0) {	//word precedes entry alphabetically
+						String w = word.toLowerCase();
+						String e = entry.getWord().toLowerCase();
+						if(w.compareTo(e) < 0) {	//word is greater than previous and less than following 
 							list.add(j, new IndexEntry(word)); 		//Inserts word at Entry's pos, pushing entry and all following elements down 
 							return j; 	//Break out of method to avoid the base case of adding the word to the end
 						} 
