@@ -12,9 +12,11 @@ public class DocumentIndex extends ArrayList<IndexEntry> { //Represents the enti
 	public void addWord(String word, int lnNum) { 
 		int index = foundOrInserted(word);
 		
-		if(index >-1) {
+		if(index > -1) {
 			IndexEntry entry = this.get(index);
-			this.add(lnNum, index);
+			this.add(lnNum, entry);
+		} else { //index == -1
+			System.out.println("Inserted in helper......." + index);
 		}
 	}
 	
@@ -48,6 +50,7 @@ public class DocumentIndex extends ArrayList<IndexEntry> { //Represents the enti
 				return i; //return the index of the word 
 			} 
 		}
+		System.out.println(word);
 		return -1;	//invalid 
 	}
 
