@@ -1,20 +1,21 @@
 import java.util.ArrayList;
 
-public class DocumentIndex extends ArrayList<IndexEntry> { //Represents the entire index for the document, list of all its index entries
-	private ArrayList<IndexEntry> list;
-	
+public class DocumentIndex extends ArrayList<IndexEntry> { //Represents the entire index for the document, list of all its index entries	
 	public DocumentIndex() {
-		//call respective ArrayList supeR???
-		list = new ArrayList<IndexEntry>();
+		super();
 	}
 	
 	public DocumentIndex(int size) {
-		list = new ArrayList<IndexEntry>(size);
+		super(size);
 	}
 	
 	public void addWord(String word, int lnNum) { 
-		if(foundOrInserted(word) >-1) //TODO fix with var
-			list.get(foundOrInserted(word)).add(lnNum);
+		int index = foundOrInserted(word);
+		
+		if(index >-1) {
+			IndexEntry entry = this.get(index);
+			this.add(lnNum, index);
+		}
 	}
 	
 	public void addAllWords(String str, int lnNum) { 
@@ -32,26 +33,22 @@ public class DocumentIndex extends ArrayList<IndexEntry> { //Represents the enti
 	//Not sure what this is for
 	private int foundOrInserted(String word) {	//Returns the index of the place it belongs
 		if(word != "") {		//Is a valid string
-			for(int i = 0; i < list.size(); i++) {	//"traverses this DocumentIndex"
-				IndexEntry entry = list.get(i);	//Temp var for entry[i]
-				
-				if(entry.getWord().toLowerCase().equals(word.toLowerCase() )) {	//An entry exists for the given word
-					return i;	//Returns index of the word that matches
-				} else {	 //Entry does not already exist
-					for(int j = 0; j < list.size(); j++) {	//Unnecessary loop?
-						String w = word.toLowerCase();
-						String e = entry.getWord().toLowerCase();
-						if(w.compareTo(e) < 0) {	//word is greater than previous and less than following 
-							list.add(j, new IndexEntry(word)); 		//Inserts word at Entry's pos, pushing entry and all following elements down 
-							return j; 	//Break out of method to avoid the base case of adding the word to the end
-						} 
-					} //After looping through all entries with no matches
-					System.out.println("got here");
-					list.add(new IndexEntry(word)); //Add entry to the end of the list 
+			int i = 0;
+			if(this.size() > 0) {
+				String lWord = this.get(i).getWord();
+				while(i < this.size() && word.compareTo(lWord) > 0) {	//While i is in bounds and greater than the preceeding word
+					i++;
+					if(i < this.size())	//check bounds
+						lWord = this.get(i).getWord();	//reset value to next word
 				}
-			}
-		} else {System.out.println("Invalid String");}
-		return -1;
+				
+				if(!word.toLowerCase().equals(this.get(i))) {	//Entry DNE at this spot
+					this.add(i, new IndexEntry(word));	//create a new one 
+				} 
+				return i; //return the index of the word 
+			} 
+		}
+		return -1;	//invalid 
 	}
 
 }
