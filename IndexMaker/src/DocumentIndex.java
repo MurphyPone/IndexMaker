@@ -12,12 +12,11 @@ public class DocumentIndex extends ArrayList<IndexEntry> { //Represents the enti
 	public void addWord(String word, int lnNum) { 
 		int index = foundOrInserted(word);
 		
+		
 		if(index > -1) {
 			IndexEntry entry = this.get(index);
 			this.add(lnNum, entry);
-		} else { //index == -1
-			System.out.println("Inserted in helper......." + index);
-		}
+		} 
 	}
 	
 	public void addAllWords(String str, int lnNum) { 
@@ -34,23 +33,26 @@ public class DocumentIndex extends ArrayList<IndexEntry> { //Represents the enti
 	
 	//Not sure what this is for
 	private int foundOrInserted(String word) {	//Returns the index of the place it belongs
-		if(word != "") {		//Is a valid string
+		if(!word.equals("")) {		//Is a valid string
 			int i = 0;
-			if(this.size() > 0) {
-				String lWord = this.get(i).getWord();
-				while(i < this.size() && word.compareTo(lWord) > 0) {	//While i is in bounds and greater than the preceeding word
+			if(this.size() > 0) { //stuppid or somen
+				String lWord = this.get(i).getWord().toLowerCase();
+				while(i < this.size() && word.compareTo(lWord) > 0) {	//gets next Word
 					i++;
 					if(i < this.size())	//check bounds
 						lWord = this.get(i).getWord();	//reset value to next word
 				}
 				
-				if(!word.toLowerCase().equals(this.get(i))) {	//Entry DNE at this spot
+				if(!word.toLowerCase().equals(lWord)) {	//Entry DNE at this spot
 					this.add(i, new IndexEntry(word));	//create a new one 
-				} 
+				}
 				return i; //return the index of the word 
-			} 
+			
+			} else {
+				this.add(i, new IndexEntry(word));	//create a new one 
+				return i;
+			}
 		}
-		System.out.println(word);
 		return -1;	//invalid 
 	}
 
