@@ -18,9 +18,9 @@ public class IndexEntry {
 	}
 	
 	public String toString() {	//Verify format
-		String result = word;
+		String result = word + "\t";	//.toLowerCase() here 
 		for(int i = 0; i < numsList.size(); i ++) {
-			result += "\t, " + numsList.get(i) ;	//Adds the line where the number appears "foo	4, 5"
+			result += numsList.get(i) ;	//Adds the line where the number appears "foo	4, 5"
 		}
 		return result;
 	}
