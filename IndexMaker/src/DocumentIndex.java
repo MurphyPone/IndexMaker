@@ -10,13 +10,14 @@ public class DocumentIndex extends ArrayList<IndexEntry> { //Represents the enti
 	}
 	
 	public void addWord(String word, int lnNum) { 
-		int index = foundOrInserted(word);
-		
-		
-		if(index > -1) {
-			IndexEntry entry = this.get(index);
-			this.add(lnNum, entry);
-		} 
+		int index = foundOrInserted(word);	//Gets the alphabetical index of the given word in the overall "book" Index
+	
+		if(index > -1) {		//The word exists within the Index 
+			IndexEntry entry = this.get(index);	//temp var for the matching entry 
+			this.add(lnNum, entry);	//Adds the line number to that entry 
+		} else { //If index ! >-1 then the given word isn't a real word and shouldn't be added
+			
+		}
 	}
 	
 	public void addAllWords(String str, int lnNum) { 
@@ -35,7 +36,7 @@ public class DocumentIndex extends ArrayList<IndexEntry> { //Represents the enti
 	private int foundOrInserted(String word) {	//Returns the index of the place it belongs
 		if(!word.equals("")) {		//Is a valid string
 			int i = 0;
-			if(this.size() > 0) { //stuppid or somen
+			if(this.size() > 0) { //DocumentIndex is not empty 
 				String lWord = this.get(i).getWord().toLowerCase();
 				while(i < this.size() && word.compareTo(lWord) > 0) {	//gets next Word
 					i++;
@@ -48,7 +49,7 @@ public class DocumentIndex extends ArrayList<IndexEntry> { //Represents the enti
 				}
 				return i; //return the index of the word 
 			
-			} else {
+			} else {	//DocIndex is empty 
 				this.add(i, new IndexEntry(word));	//create a new one 
 				return i;
 			}
