@@ -14,9 +14,9 @@ public class DocumentIndex extends ArrayList<IndexEntry> { //Represents the enti
 	
 		if(index > -1) {		//The word exists within the Index 
 			IndexEntry entry = this.get(index);	//temp var for the matching entry 
-			this.add(lnNum, entry);	//Adds the line number to that entry 
+			entry.getNumsList().add(lnNum);	//Adds the lnNum to the entry's list of nums
 		} else { //If index ! >-1 then the given word isn't a real word and shouldn't be added
-			
+			System.out.println(word); //empty strings
 		}
 	}
 	
@@ -37,14 +37,14 @@ public class DocumentIndex extends ArrayList<IndexEntry> { //Represents the enti
 		if(!word.equals("")) {		//Is a valid string
 			int i = 0;
 			if(this.size() > 0) { //DocumentIndex is not empty 
-				String lWord = this.get(i).getWord().toLowerCase();
-				while(i < this.size() && word.compareTo(lWord) > 0) {	//gets next Word
+				String lWord = this.get(i).getWord();
+				while(i < this.size() && word.compareToIgnoreCase(lWord) > 0) {	//gets next Word
 					i++;
 					if(i < this.size())	//check bounds
 						lWord = this.get(i).getWord();	//reset value to next word
 				}
 				
-				if(!word.toLowerCase().equals(lWord)) {	//Entry DNE at this spot
+				if(!word.equalsIgnoreCase(lWord)) {	//Entry does not match at this spot 
 					this.add(i, new IndexEntry(word));	//create a new one 
 				}
 				return i; //return the index of the word 

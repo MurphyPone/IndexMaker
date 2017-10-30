@@ -10,7 +10,14 @@ public class IndexEntry {
 	}
 	
 	public void add(int num) {	//Appends num to numslist if it is not already in the list
-		numsList.add(num);
+		if(!numsList.contains(num)) {	//numsList does not already have that num 
+			numsList.add(num);
+		}
+	}
+	
+	//Helper for addWords...
+	public ArrayList<Integer> getNumsList() {
+		return numsList;
 	}
 	
 	public String getWord() {
@@ -18,9 +25,11 @@ public class IndexEntry {
 	}
 	
 	public String toString() {	//Verify format
-		String result = word + "\t";	//.toLowerCase() here 
-		for(int i = 0; i < numsList.size(); i ++) {
-			result += numsList.get(i) ;	//Adds the line where the number appears "foo	4, 5"
+		String result = word + "\t\t";	//.toLowerCase() here 
+		
+		result += numsList.get(0);	//First entry doesn't have a leading comma
+		for(int i = 1; i < numsList.size(); i ++) {
+			result += ", " + numsList.get(i); //Adds the line where the number appears "foo	4, 5"
 		}
 		return result;
 	}
